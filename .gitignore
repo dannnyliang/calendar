@@ -1,8 +1,11 @@
+.cache/
+
 # dependencies
 node_modules/
 
 # production
 build/
+dist/
 
 # dotenv environment variables file
 .env
