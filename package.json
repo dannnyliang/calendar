@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "parcel -p 3000 index.html",
-    "build": "parcel build index.html"
+    "build": "yarn clean && parcel build index.html",
+    "clean": "rm -rf dist .cache"
   },
   "dependencies": {
     "react": "^17.0.1",
