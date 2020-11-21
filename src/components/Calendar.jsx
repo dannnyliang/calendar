@@ -1,8 +1,10 @@
 import { format } from "date-fns";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import styled from "styled-components";
 
 import { VIEW } from "../constant";
+import { BREAKPOINTS } from "../styles/breakpoints";
 import ControlBar from "./ControlBar";
 import DateView from "./DateView";
 import MonthView from "./MonthView";
@@ -65,7 +67,9 @@ function Calendar(props) {
 
   return (
     <div className={className}>
-      <div>{format(selectedDate, "yyyy-MM-dd")}</div>
+      <div className="selected-date">
+        Selected Date: {format(selectedDate, "yyyy-MM-dd")}
+      </div>
       <ControlBar
         currentView={currentView}
         selectedDate={selectedDate}
@@ -91,4 +95,22 @@ function Calendar(props) {
 Calendar.propTypes = propTypes;
 Calendar.defaultProps = defaultProps;
 
-export default Calendar;
+const StyledCalendar = styled(Calendar)`
+  max-width: 400px;
+  margin: 0 auto;
+
+  .selected-date {
+    text-align: center;
+  }
+
+  @media (max-width: ${BREAKPOINTS.S}) {
+    max-width: initial;
+    width: 100%;
+    font-size: 20px;
+  }
+`;
+
+StyledCalendar.propTypes = propTypes;
+StyledCalendar.defaultProps = defaultProps;
+
+export default StyledCalendar;
