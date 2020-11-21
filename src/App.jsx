@@ -1,21 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 
-import StyledControlBar from "./components/ControlBar";
-import DateView from "./components/DateView";
-import MonthView from "./components/MonthView";
-import YearView from "./components/YearView";
+import ControlBar from "./components/ControlBar";
+import { VIEW } from "./constant";
+import { getHigherView, getLowerView, getViewComponent } from "./utils";
+
+const initialView = VIEW.DATE;
+const initialDate = new Date();
 
 function Calendar() {
-  return <DateView />;
-  // return <MonthView />;
-  // return <YearView />;
+  const [currentView, setCurrentView] = useState(initialView);
+  const [selectedDate, setSelectedDate] = useState(initialDate);
+
+  const handleChangeView = (selectedDate) => {
+    if (selectedDate) {
+      setCurrentView(getLowerView);
+      setSelectedDate(selectedDate);
+    }
+    setCurrentView(getHigherView);
+  };
+
+  const ViewComponent = getViewComponent(currentView);
+
+  return (
+    <>
+      <ControlBar
+        currentView={currentView}
+        selectedDate={selectedDate}
+        handleChangeView={handleChangeView}
+      />
+      <ViewComponent />
+    </>
+  );
 }
 
 function App() {
   return (
     <div style={{ maxWidth: "400px", margin: "0 auto" }}>
       Hello React
-      <StyledControlBar />
       <Calendar />
     </div>
   );

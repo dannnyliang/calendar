@@ -1,19 +1,49 @@
+import { endOfDecade, format, startOfDecade } from "date-fns";
 import PropTypes from "prop-types";
 import React from "react";
 import styled, { css } from "styled-components";
 
+import { VIEW } from "../constant";
 import { GRAY } from "../styles/color";
 import { m } from "../styles/space";
 
+const getLabelContent = (currentView, selectedDate) => {
+  if (currentView === VIEW.YEAR) {
+    const decadeInterval = {
+      start: startOfDecade(selectedDate),
+      end: endOfDecade(selectedDate),
+    };
+    return `${format(decadeInterval.start, "yyyy")}-${format(
+      decadeInterval.end,
+      "yyyy"
+    )}`;
+  }
+  if (currentView === VIEW.MONTH) {
+    return format(selectedDate, "yyyy");
+  }
+  if (currentView === VIEW.DATE) {
+    return format(selectedDate, "MMM yyyy");
+  }
+};
+
 const propTypes = {
   className: PropTypes.string,
+  currentView: PropTypes.string,
+  selectedDate: PropTypes.object,
+  handleChangeView: PropTypes.func,
 };
 
 function ControlBar(props) {
+  const { className, currentView, selectedDate, handleChangeView } = props;
+
+  const handleclick = () => handleChangeView();
+
   return (
-    <div className={props.className}>
+    <div className={className}>
       <div className="prev">&lt;</div>
-      <div className="current">Nov 2020</div>
+      <div className="label" onClick={handleclick}>
+        {getLabelContent(currentView, selectedDate)}
+      </div>
       <div className="next">&gt;</div>
     </div>
   );
@@ -25,7 +55,7 @@ const gridStyle = css`
   .prev {
     grid-column: 1 / 2;
   }
-  .current {
+  .label {
     grid-column: span 5;
   }
   .next {
@@ -49,10 +79,13 @@ const StyledControlBar = styled(ControlBar)`
     align-items: center;
     justify-content: center;
   }
-  .current {
+  .label {
     padding: ${m} 0;
     border-radius: ${m};
-    background-color: ${GRAY};
+
+    :hover {
+      background-color: ${GRAY};
+    }
   }
 
   ${gridStyle}
