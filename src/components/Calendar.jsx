@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { VIEW } from "../constant";
 import { BREAKPOINTS } from "../styles/breakpoints";
+import { WHITE } from "../styles/color";
 import ControlBar from "./ControlBar";
 import DateView from "./DateView";
 import MonthView from "./MonthView";
@@ -93,6 +94,8 @@ Calendar.defaultProps = defaultProps;
 
 const StyledCalendar = styled(Calendar)`
   max-width: 400px;
+  background-color: ${WHITE};
+  position: relative;
 
   @media (max-width: ${BREAKPOINTS.S}) {
     max-width: initial;
