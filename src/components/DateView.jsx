@@ -30,21 +30,22 @@ function WeekHeader() {
 
 const propTypes = {
   className: PropTypes.string,
+  displayDate: PropTypes.object.isRequired,
   selectedDate: PropTypes.object.isRequired,
   onSelectDate: PropTypes.func,
 };
 
 function DateView(props) {
-  const { className, selectedDate, onSelectDate } = props;
+  const { className, displayDate, selectedDate, onSelectDate } = props;
 
   const isDisabled = (date) =>
-    isBefore(date, startOfMonth(selectedDate)) ||
-    isAfter(date, endOfMonth(selectedDate));
+    isBefore(date, startOfMonth(displayDate)) ||
+    isAfter(date, endOfMonth(displayDate));
 
   return (
     <div className={className}>
       <WeekHeader />
-      {getDateList(selectedDate).map((date) => (
+      {getDateList(displayDate).map((date) => (
         <div
           key={format(date, "yyyy-MM-dd")}
           onClick={() => onSelectDate?.(date)}

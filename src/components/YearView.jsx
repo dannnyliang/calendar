@@ -20,25 +20,26 @@ import Cell from "./Cell";
 const propTypes = {
   className: PropTypes.string,
   selectedDate: PropTypes.object.isRequired,
+  displayDate: PropTypes.object.isRequired,
   onChangeView: PropTypes.func,
 };
 
 function YearView(props) {
-  const { className, selectedDate, onChangeView } = props;
+  const { className, selectedDate, displayDate, onChangeView } = props;
 
   const isDisabled = (year) =>
-    isBefore(year, startOfDecade(selectedDate)) ||
-    isAfter(year, endOfDecade(selectedDate));
+    isBefore(year, startOfDecade(displayDate)) ||
+    isAfter(year, endOfDecade(displayDate));
 
   const handleClick = (year) => {
     const selectedYear = getYear(year);
-    const newSelectedDate = setYear(selectedDate, selectedYear);
-    onChangeView?.(newSelectedDate);
+    const newDisplayDate = setYear(displayDate, selectedYear);
+    onChangeView?.(newDisplayDate);
   };
 
   return (
     <div className={className}>
-      {getYearList(selectedDate).map((year) => (
+      {getYearList(displayDate).map((year) => (
         <div key={format(year, "yyyy")} onClick={() => handleClick(year)}>
           <Cell
             isCurrent={isThisYear(year)}

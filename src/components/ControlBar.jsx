@@ -1,11 +1,9 @@
 import {
-  addDays,
   addMonths,
   addYears,
   endOfDecade,
   format,
   startOfDecade,
-  subDays,
   subMonths,
   subYears,
 } from "date-fns";
@@ -17,11 +15,11 @@ import { VIEW } from "../constant";
 import { DISABLE } from "../styles/color";
 import { m } from "../styles/space";
 
-const getLabelContent = (currentView, selectedDate) => {
+const getLabelContent = (currentView, displayDate) => {
   if (currentView === VIEW.YEAR) {
     const decadeInterval = {
-      start: startOfDecade(selectedDate),
-      end: endOfDecade(selectedDate),
+      start: startOfDecade(displayDate),
+      end: endOfDecade(displayDate),
     };
     return `${format(decadeInterval.start, "yyyy")}-${format(
       decadeInterval.end,
@@ -29,57 +27,57 @@ const getLabelContent = (currentView, selectedDate) => {
     )}`;
   }
   if (currentView === VIEW.MONTH) {
-    return format(selectedDate, "yyyy");
+    return format(displayDate, "yyyy");
   }
   if (currentView === VIEW.DATE) {
-    return format(selectedDate, "MMM yyyy");
+    return format(displayDate, "MMM yyyy");
   }
 };
 
-const getNewSelectedDate = ({ view, direction, selectedDate }) => {
+const getNewDisplayDate = ({ view, direction, displayDate }) => {
   switch (view) {
     case VIEW.DATE:
       return direction === "next"
-        ? addDays(selectedDate, 1)
-        : subDays(selectedDate, 1);
+        ? addMonths(displayDate, 1)
+        : subMonths(displayDate, 1);
     case VIEW.MONTH:
       return direction === "next"
-        ? addMonths(selectedDate, 1)
-        : subMonths(selectedDate, 1);
+        ? addYears(displayDate, 1)
+        : subYears(displayDate, 1);
     case VIEW.YEAR:
       return direction === "next"
-        ? addYears(selectedDate, 1)
-        : subYears(selectedDate, 1);
+        ? addYears(displayDate, 10)
+        : subYears(displayDate, 10);
     default:
-      return selectedDate;
+      return displayDate;
   }
 };
 
 const propTypes = {
   className: PropTypes.string,
   currentView: PropTypes.string,
-  selectedDate: PropTypes.object.isRequired,
+  displayDate: PropTypes.object.isRequired,
   onChangeView: PropTypes.func,
-  onSelectDate: PropTypes.func,
+  onChangeDisplay: PropTypes.func,
 };
 
 function ControlBar(props) {
   const {
     className,
     currentView,
-    selectedDate,
+    displayDate,
     onChangeView,
-    onSelectDate,
+    onChangeDisplay,
   } = props;
 
   const handleClickLabel = () => onChangeView?.();
   const handleClickDirection = (direction) => {
-    const newSelectedDate = getNewSelectedDate({
-      selectedDate,
+    const newSelectedDate = getNewDisplayDate({
+      displayDate,
       view: currentView,
       direction,
     });
-    onSelectDate?.(newSelectedDate);
+    onChangeDisplay?.(newSelectedDate);
   };
   const handleClickNext = () => handleClickDirection("next");
   const handleClickPrev = () => handleClickDirection("prev");
@@ -90,7 +88,7 @@ function ControlBar(props) {
         &lt;
       </div>
       <div className="label" onClick={handleClickLabel}>
-        {getLabelContent(currentView, selectedDate)}
+        {getLabelContent(currentView, displayDate)}
       </div>
       <div className="next" onClick={handleClickNext}>
         &gt;

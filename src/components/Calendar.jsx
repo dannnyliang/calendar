@@ -50,40 +50,53 @@ function Calendar(props) {
 
   const [currentView, setCurrentView] = useState(initialView);
   const [selectedDate, setSelectedDate] = useState(initialDate);
+  const [displayDate, setDisplayDate] = useState(initialDate);
 
-  const handleSelectDate = (selectedDate) => {
-    setSelectedDate(selectedDate);
-    onSelect?.(selectedDate);
-  };
+  const handleChangeDisplay = (displayDate) => setDisplayDate(displayDate);
 
-  const handleChangeView = (selectedDate) => {
-    if (selectedDate) {
+  const handleChangeView = (displayDate) => {
+    if (displayDate) {
       setCurrentView(getLowerView);
-      handleSelectDate(selectedDate);
+      handleChangeDisplay(displayDate);
     } else {
       setCurrentView(getHigherView);
     }
+  };
+
+  const handleSelectDate = (selectedDate) => {
+    setSelectedDate(selectedDate);
+    handleChangeView(selectedDate);
+    onSelect?.(selectedDate);
   };
 
   return (
     <div className={className}>
       <ControlBar
         currentView={currentView}
-        selectedDate={selectedDate}
+        displayDate={displayDate}
         onChangeView={handleChangeView}
-        onSelectDate={handleSelectDate}
+        onChangeDisplay={handleChangeDisplay}
       />
       {currentView === VIEW.DATE && (
-        <DateView selectedDate={selectedDate} onSelectDate={handleSelectDate} />
+        <DateView
+          selectedDate={selectedDate}
+          displayDate={displayDate}
+          onSelectDate={handleSelectDate}
+        />
       )}
       {currentView === VIEW.MONTH && (
         <MonthView
           selectedDate={selectedDate}
+          displayDate={displayDate}
           onChangeView={handleChangeView}
         />
       )}
       {currentView === VIEW.YEAR && (
-        <YearView selectedDate={selectedDate} onChangeView={handleChangeView} />
+        <YearView
+          selectedDate={selectedDate}
+          displayDate={displayDate}
+          onChangeView={handleChangeView}
+        />
       )}
     </div>
   );
