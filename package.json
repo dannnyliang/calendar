@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "parcel -p 3000 watch ./src/index.html",
-    "build": "yarn clean && parcel build index.html",
+    "build": "yarn clean && parcel build ./src/index.html",
     "clean": "rm -rf dist .cache",
     "test": "jest"
   },
