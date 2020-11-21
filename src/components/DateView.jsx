@@ -14,13 +14,17 @@ import styled from "styled-components";
 import { getDateList, weekList } from "../helpers";
 import Cell from "./Cell";
 
+const HeaderCell = styled(Cell)`
+  font-weight: bold;
+`;
+
 function WeekHeader() {
   return weekList
     .map((week) => format(week, "EEEEEE"))
     .map((week) => (
-      <Cell key={week} clickable={false}>
+      <HeaderCell key={week} clickable={false}>
         {week}
-      </Cell>
+      </HeaderCell>
     ));
 }
 

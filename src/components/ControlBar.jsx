@@ -117,6 +117,7 @@ const StyledControlBar = styled(ControlBar)`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
+  font-weight: bold;
   padding: ${m} 0;
 
   & > div {
