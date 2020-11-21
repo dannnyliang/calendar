@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import styled from "styled-components";
@@ -46,7 +45,7 @@ const initialView = VIEW.DATE;
 
 function Calendar(props) {
   const { className, date, onSelect } = props;
-  const initialDate = new Date(date);
+  const initialDate = date ? new Date(date) : new Date();
 
   const [currentView, setCurrentView] = useState(initialView);
   const [selectedDate, setSelectedDate] = useState(initialDate);
@@ -67,9 +66,6 @@ function Calendar(props) {
 
   return (
     <div className={className}>
-      <div className="selected-date">
-        Selected Date: {format(selectedDate, "yyyy-MM-dd")}
-      </div>
       <ControlBar
         currentView={currentView}
         selectedDate={selectedDate}
@@ -97,11 +93,6 @@ Calendar.defaultProps = defaultProps;
 
 const StyledCalendar = styled(Calendar)`
   max-width: 400px;
-  margin: 0 auto;
-
-  .selected-date {
-    text-align: center;
-  }
 
   @media (max-width: ${BREAKPOINTS.S}) {
     max-width: initial;
