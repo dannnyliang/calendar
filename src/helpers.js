@@ -17,7 +17,15 @@ import { evolve, pipe } from "ramda";
 
 import { YEARVIEW_COLUMN } from "./constant";
 
-export function getDateList() {
+export const weekList = pipe(
+  (date) => ({
+    start: startOfWeek(date),
+    end: endOfWeek(date),
+  }),
+  eachDayOfInterval
+)(new Date());
+
+export function getDateList(date) {
   const weekdayCount = 7;
   const rowCount = 6;
 
@@ -29,30 +37,20 @@ export function getDateList() {
       end: addDays(weekdayCount * rowCount - 1, date),
     }),
     eachDayOfInterval
-  )(new Date());
+  )(date);
 }
 
-export function getWeekList() {
-  return pipe(
-    (date) => ({
-      start: startOfWeek(date),
-      end: endOfWeek(date),
-    }),
-    eachDayOfInterval
-  )(new Date());
-}
-
-export function getMonthList() {
+export function getMonthList(date) {
   return pipe(
     (date) => ({
       start: startOfYear(date),
       end: endOfYear(date),
     }),
     eachMonthOfInterval
-  )(new Date());
+  )(date);
 }
 
-export function getYearList() {
+export function getYearList(date) {
   const decadeWithStartCount = 10 + 1;
   const displayCount =
     (Math.floor(decadeWithStartCount / YEARVIEW_COLUMN) + 1) * YEARVIEW_COLUMN;
@@ -67,5 +65,5 @@ export function getYearList() {
       end: addYears(displayCount - decadeWithStartCount),
     }),
     eachYearOfInterval
-  )(new Date());
+  )(date);
 }
