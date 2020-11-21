@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import styled, { css } from "styled-components";
 
-import { GRAY, PRIMARY, WHITE } from "../styles/color";
+import { DISABLE, PRIMARY, WHITE } from "../styles/color";
 
 const propTypes = {
   className: PropTypes.string,
@@ -43,7 +43,7 @@ const activeStyle = css`
 `;
 
 const disableStyle = css`
-  color: ${GRAY};
+  color: ${DISABLE};
 `;
 
 const clickableStyle = css`

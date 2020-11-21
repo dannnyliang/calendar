@@ -14,7 +14,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 import { VIEW } from "../constant";
-import { GRAY } from "../styles/color";
+import { DISABLE } from "../styles/color";
 import { m } from "../styles/space";
 
 const getLabelContent = (currentView, selectedDate) => {
@@ -135,7 +135,7 @@ const StyledControlBar = styled(ControlBar)`
     border-radius: ${m};
 
     :hover {
-      background-color: ${GRAY};
+      background-color: ${DISABLE};
     }
   }
 
