@@ -5,7 +5,7 @@
   "author": "dannnyliang <youchenliang@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "parcel -p 3000 index.html",
+    "dev": "parcel -p 3000 watch ./src/index.html",
     "build": "yarn clean && parcel build index.html",
     "clean": "rm -rf dist .cache",
     "test": "jest"
