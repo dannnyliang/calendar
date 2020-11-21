@@ -3,11 +3,32 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 
 import { VIEW } from "../constant";
-import { getHigherView, getLowerView } from "../utils";
 import ControlBar from "./ControlBar";
 import DateView from "./DateView";
 import MonthView from "./MonthView";
 import YearView from "./YearView";
+
+function getLowerView(currentView) {
+  switch (currentView) {
+    case VIEW.DATE:
+      return VIEW.DATE;
+    case VIEW.MONTH:
+      return VIEW.DATE;
+    case VIEW.YEAR:
+      return VIEW.MONTH;
+  }
+}
+
+function getHigherView(currentView) {
+  switch (currentView) {
+    case VIEW.DATE:
+      return VIEW.MONTH;
+    case VIEW.MONTH:
+      return VIEW.YEAR;
+    case VIEW.YEAR:
+      return VIEW.YEAR;
+  }
+}
 
 const propTypes = {
   className: PropTypes.string,
