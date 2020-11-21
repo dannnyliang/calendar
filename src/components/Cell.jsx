@@ -80,8 +80,8 @@ const StyledCell = styled(Cell)`
     align-items: center;
     justify-content: center;
 
-    ${(props) => props.clickable && clickableStyle}
     ${(props) => props.isCurrent && currentStyle}
+    ${(props) => props.clickable && clickableStyle}
     ${(props) => props.disabled && disableStyle}
   }
   ${squareStyle}
