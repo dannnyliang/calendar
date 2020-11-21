@@ -1,8 +1,11 @@
 import {
   endOfDecade,
+  getYear,
   isAfter,
   isBefore,
+  isSameYear,
   isThisYear,
+  setYear,
   startOfDecade,
 } from "date-fns";
 import { format } from "date-fns/fp";
@@ -17,30 +20,38 @@ import Cell from "./Cell";
 
 const propTypes = {
   className: PropTypes.string,
+  selectedDate: PropTypes.object,
+  handleChangeView: PropTypes.func,
 };
 
 function YearView(props) {
-  const decadeInterval = {
-    start: startOfDecade(new Date()),
-    end: endOfDecade(new Date()),
-  };
+  const { className, selectedDate, handleChangeView } = props;
 
   const isDisabled = (year) =>
-    isBefore(year, decadeInterval.start) || isAfter(year, decadeInterval.end);
+    isBefore(year, startOfDecade(selectedDate)) ||
+    isAfter(year, endOfDecade(selectedDate));
+
+  const handleClick = (year) => {
+    const selectedYear = getYear(year);
+    const newSelectedDate = setYear(selectedDate, selectedYear);
+    handleChangeView(newSelectedDate);
+  };
 
   return (
-    <div className={props.className}>
+    <div className={className}>
       {map(
         (year) => (
-          <Cell
-            key={format("yyyy", year)}
-            isCurrent={isThisYear(year)}
-            disabled={isDisabled(year)}
-          >
-            {format("yyyy", year)}
-          </Cell>
+          <div key={format("yyyy", year)} onClick={() => handleClick(year)}>
+            <Cell
+              isCurrent={isThisYear(year)}
+              isActive={isSameYear(selectedDate, year)}
+              disabled={isDisabled(year)}
+            >
+              {format("yyyy", year)}
+            </Cell>
+          </div>
         ),
-        getYearList()
+        getYearList(selectedDate)
       )}
     </div>
   );

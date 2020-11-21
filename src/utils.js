@@ -1,18 +1,4 @@
-import DateView from "./components/DateView";
-import MonthView from "./components/MonthView";
-import YearView from "./components/YearView";
 import { VIEW } from "./constant";
-
-export function getViewComponent(currentView) {
-  switch (currentView) {
-    case VIEW.DATE:
-      return DateView;
-    case VIEW.MONTH:
-      return MonthView;
-    case VIEW.YEAR:
-      return YearView;
-  }
-}
 
 export function getLowerView(currentView) {
   switch (currentView) {
