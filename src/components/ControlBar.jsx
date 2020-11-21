@@ -1,4 +1,14 @@
-import { endOfDecade, format, startOfDecade } from "date-fns";
+import {
+  addDays,
+  addMonths,
+  addYears,
+  endOfDecade,
+  format,
+  startOfDecade,
+  subDays,
+  subMonths,
+  subYears,
+} from "date-fns";
 import PropTypes from "prop-types";
 import React from "react";
 import styled, { css } from "styled-components";
@@ -26,25 +36,65 @@ const getLabelContent = (currentView, selectedDate) => {
   }
 };
 
+const getNewSelectedDate = ({ view, direction, selectedDate }) => {
+  switch (view) {
+    case VIEW.DATE:
+      return direction === "next"
+        ? addDays(selectedDate, 1)
+        : subDays(selectedDate, 1);
+    case VIEW.MONTH:
+      return direction === "next"
+        ? addMonths(selectedDate, 1)
+        : subMonths(selectedDate, 1);
+    case VIEW.YEAR:
+      return direction === "next"
+        ? addYears(selectedDate, 1)
+        : subYears(selectedDate, 1);
+    default:
+      return selectedDate;
+  }
+};
+
 const propTypes = {
   className: PropTypes.string,
   currentView: PropTypes.string,
   selectedDate: PropTypes.object,
   handleChangeView: PropTypes.func,
+  handleSelectDate: PropTypes.func,
 };
 
 function ControlBar(props) {
-  const { className, currentView, selectedDate, handleChangeView } = props;
+  const {
+    className,
+    currentView,
+    selectedDate,
+    handleChangeView,
+    handleSelectDate,
+  } = props;
 
-  const handleclick = () => handleChangeView();
+  const handleClickLabel = () => handleChangeView();
+  const handleClickDirection = (direction) => {
+    const newSelectedDate = getNewSelectedDate({
+      selectedDate,
+      view: currentView,
+      direction,
+    });
+    handleSelectDate(newSelectedDate);
+  };
+  const handleClickNext = () => handleClickDirection("next");
+  const handleClickPrev = () => handleClickDirection("prev");
 
   return (
     <div className={className}>
-      <div className="prev">&lt;</div>
-      <div className="label" onClick={handleclick}>
+      <div className="prev" onClick={handleClickPrev}>
+        &lt;
+      </div>
+      <div className="label" onClick={handleClickLabel}>
         {getLabelContent(currentView, selectedDate)}
       </div>
-      <div className="next">&gt;</div>
+      <div className="next" onClick={handleClickNext}>
+        &gt;
+      </div>
     </div>
   );
 }

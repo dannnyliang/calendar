@@ -33,6 +33,7 @@ function Calendar() {
         currentView={currentView}
         selectedDate={selectedDate}
         handleChangeView={handleChangeView}
+        handleSelectDate={handleSelectDate}
       />
       {currentView === VIEW.DATE && (
         <DateView
