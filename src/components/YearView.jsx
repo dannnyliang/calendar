@@ -1,5 +1,6 @@
 import {
   endOfDecade,
+  format,
   getYear,
   isAfter,
   isBefore,
@@ -8,9 +9,7 @@ import {
   setYear,
   startOfDecade,
 } from "date-fns";
-import { format } from "date-fns/fp";
 import PropTypes from "prop-types";
-import { map } from "ramda";
 import React from "react";
 import styled from "styled-components";
 
@@ -39,20 +38,17 @@ function YearView(props) {
 
   return (
     <div className={className}>
-      {map(
-        (year) => (
-          <div key={format("yyyy", year)} onClick={() => handleClick(year)}>
-            <Cell
-              isCurrent={isThisYear(year)}
-              isActive={isSameYear(selectedDate, year)}
-              disabled={isDisabled(year)}
-            >
-              {format("yyyy", year)}
-            </Cell>
-          </div>
-        ),
-        getYearList(selectedDate)
-      )}
+      {getYearList(selectedDate).map((year) => (
+        <div key={format(year, "yyyy")} onClick={() => handleClick(year)}>
+          <Cell
+            isCurrent={isThisYear(year)}
+            isActive={isSameYear(selectedDate, year)}
+            disabled={isDisabled(year)}
+          >
+            {format(year, "yyyy")}
+          </Cell>
+        </div>
+      ))}
     </div>
   );
 }

@@ -1,14 +1,13 @@
 import {
   endOfMonth,
+  format,
   isAfter,
   isBefore,
   isSameDay,
   isToday,
   startOfMonth,
 } from "date-fns";
-import { format } from "date-fns/fp";
 import PropTypes from "prop-types";
-import { map } from "ramda";
 import React from "react";
 import styled from "styled-components";
 
@@ -16,13 +15,13 @@ import { getDateList, weekList } from "../helpers";
 import Cell from "./Cell";
 
 function WeekHeader() {
-  const formatWeekList = map(format("EEEEEE"))(weekList);
-
-  return map((week) => (
-    <Cell key={week} clickable={false}>
-      {week}
-    </Cell>
-  ))(formatWeekList);
+  return weekList
+    .map((week) => format(week, "EEEEEE"))
+    .map((week) => (
+      <Cell key={week} clickable={false}>
+        {week}
+      </Cell>
+    ));
 }
 
 const propTypes = {
@@ -41,23 +40,20 @@ function DateView(props) {
   return (
     <div className={className}>
       <WeekHeader />
-      {map(
-        (date) => (
-          <div
-            key={format("yyyy-MM-dd", date)}
-            onClick={() => handleSelectDate(date)}
+      {getDateList(selectedDate).map((date) => (
+        <div
+          key={format(date, "yyyy-MM-dd")}
+          onClick={() => handleSelectDate(date)}
+        >
+          <Cell
+            isCurrent={isToday(date)}
+            isActive={isSameDay(selectedDate, date)}
+            disabled={isDisabled(date)}
           >
-            <Cell
-              isCurrent={isToday(date)}
-              isActive={isSameDay(selectedDate, date)}
-              disabled={isDisabled(date)}
-            >
-              {format("d", date)}
-            </Cell>
-          </div>
-        ),
-        getDateList(selectedDate)
-      )}
+            {format(date, "d")}
+          </Cell>
+        </div>
+      ))}
     </div>
   );
 }

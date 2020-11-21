@@ -1,7 +1,5 @@
-import { getMonth, isSameMonth, isThisMonth, setMonth } from "date-fns";
-import { format } from "date-fns/fp";
+import { format, getMonth, isSameMonth, isThisMonth, setMonth } from "date-fns";
 import PropTypes from "prop-types";
-import { map } from "ramda";
 import React from "react";
 import styled from "styled-components";
 
@@ -26,19 +24,16 @@ function MonthView(props) {
 
   return (
     <div className={className}>
-      {map(
-        (month) => (
-          <div key={format("MMM", month)} onClick={() => handleClick(month)}>
-            <Cell
-              isCurrent={isThisMonth(month)}
-              isActive={isSameMonth(selectedDate, month)}
-            >
-              {format("MMM", month)}
-            </Cell>
-          </div>
-        ),
-        getMonthList(selectedDate)
-      )}
+      {getMonthList(selectedDate).map((month) => (
+        <div key={format(month, "MMM")} onClick={() => handleClick(month)}>
+          <Cell
+            isCurrent={isThisMonth(month)}
+            isActive={isSameMonth(selectedDate, month)}
+          >
+            {format(month, "MMM")}
+          </Cell>
+        </div>
+      ))}
     </div>
   );
 }
