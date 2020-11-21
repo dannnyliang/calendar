@@ -19,12 +19,12 @@ import Cell from "./Cell";
 
 const propTypes = {
   className: PropTypes.string,
-  selectedDate: PropTypes.object,
-  handleChangeView: PropTypes.func,
+  selectedDate: PropTypes.object.isRequired,
+  onChangeView: PropTypes.func,
 };
 
 function YearView(props) {
-  const { className, selectedDate, handleChangeView } = props;
+  const { className, selectedDate, onChangeView } = props;
 
   const isDisabled = (year) =>
     isBefore(year, startOfDecade(selectedDate)) ||
@@ -33,7 +33,7 @@ function YearView(props) {
   const handleClick = (year) => {
     const selectedYear = getYear(year);
     const newSelectedDate = setYear(selectedDate, selectedYear);
-    handleChangeView(newSelectedDate);
+    onChangeView?.(newSelectedDate);
   };
 
   return (

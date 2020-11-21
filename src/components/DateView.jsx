@@ -26,12 +26,12 @@ function WeekHeader() {
 
 const propTypes = {
   className: PropTypes.string,
-  selectedDate: PropTypes.object,
-  handleSelectDate: PropTypes.func,
+  selectedDate: PropTypes.object.isRequired,
+  onSelectDate: PropTypes.func,
 };
 
 function DateView(props) {
-  const { className, selectedDate, handleSelectDate } = props;
+  const { className, selectedDate, onSelectDate } = props;
 
   const isDisabled = (date) =>
     isBefore(date, startOfMonth(selectedDate)) ||
@@ -43,7 +43,7 @@ function DateView(props) {
       {getDateList(selectedDate).map((date) => (
         <div
           key={format(date, "yyyy-MM-dd")}
-          onClick={() => handleSelectDate(date)}
+          onClick={() => onSelectDate?.(date)}
         >
           <Cell
             isCurrent={isToday(date)}

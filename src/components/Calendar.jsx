@@ -43,7 +43,7 @@ const defaultProps = {
 const initialView = VIEW.DATE;
 
 function Calendar(props) {
-  const { date, onSelect } = props;
+  const { className, date, onSelect } = props;
   const initialDate = new Date(date);
 
   const [currentView, setCurrentView] = useState(initialView);
@@ -64,33 +64,27 @@ function Calendar(props) {
   };
 
   return (
-    <>
+    <div className={className}>
       <div>{format(selectedDate, "yyyy-MM-dd")}</div>
       <ControlBar
         currentView={currentView}
         selectedDate={selectedDate}
-        handleChangeView={handleChangeView}
-        handleSelectDate={handleSelectDate}
+        onChangeView={handleChangeView}
+        onSelectDate={handleSelectDate}
       />
       {currentView === VIEW.DATE && (
-        <DateView
-          selectedDate={selectedDate}
-          handleSelectDate={handleSelectDate}
-        />
+        <DateView selectedDate={selectedDate} onSelectDate={handleSelectDate} />
       )}
       {currentView === VIEW.MONTH && (
         <MonthView
           selectedDate={selectedDate}
-          handleChangeView={handleChangeView}
+          onChangeView={handleChangeView}
         />
       )}
       {currentView === VIEW.YEAR && (
-        <YearView
-          selectedDate={selectedDate}
-          handleChangeView={handleChangeView}
-        />
+        <YearView selectedDate={selectedDate} onChangeView={handleChangeView} />
       )}
-    </>
+    </div>
   );
 }
 

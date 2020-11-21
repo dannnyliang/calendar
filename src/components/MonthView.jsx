@@ -9,17 +9,17 @@ import Cell from "./Cell";
 
 const propTypes = {
   className: PropTypes.string,
-  selectedDate: PropTypes.object,
-  handleChangeView: PropTypes.func,
+  selectedDate: PropTypes.object.isRequired,
+  onChangeView: PropTypes.func,
 };
 
 function MonthView(props) {
-  const { className, selectedDate, handleChangeView } = props;
+  const { className, selectedDate, onChangeView } = props;
 
   const handleClick = (month) => {
     const selectedMonth = getMonth(month);
     const newSelectedDate = setMonth(selectedDate, selectedMonth);
-    handleChangeView(newSelectedDate);
+    onChangeView?.(newSelectedDate);
   };
 
   return (

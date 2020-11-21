@@ -6,7 +6,7 @@ import { GRAY, PRIMARY, WHITE } from "../styles/color";
 
 const propTypes = {
   className: PropTypes.string,
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
   clickable: PropTypes.bool,
   isActive: PropTypes.bool,
   isCurrent: PropTypes.bool,

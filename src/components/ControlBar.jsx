@@ -58,9 +58,9 @@ const getNewSelectedDate = ({ view, direction, selectedDate }) => {
 const propTypes = {
   className: PropTypes.string,
   currentView: PropTypes.string,
-  selectedDate: PropTypes.object,
-  handleChangeView: PropTypes.func,
-  handleSelectDate: PropTypes.func,
+  selectedDate: PropTypes.object.isRequired,
+  onChangeView: PropTypes.func,
+  onSelectDate: PropTypes.func,
 };
 
 function ControlBar(props) {
@@ -68,18 +68,18 @@ function ControlBar(props) {
     className,
     currentView,
     selectedDate,
-    handleChangeView,
-    handleSelectDate,
+    onChangeView,
+    onSelectDate,
   } = props;
 
-  const handleClickLabel = () => handleChangeView();
+  const handleClickLabel = () => onChangeView?.();
   const handleClickDirection = (direction) => {
     const newSelectedDate = getNewSelectedDate({
       selectedDate,
       view: currentView,
       direction,
     });
-    handleSelectDate(newSelectedDate);
+    onSelectDate?.(newSelectedDate);
   };
   const handleClickNext = () => handleClickDirection("next");
   const handleClickPrev = () => handleClickDirection("prev");
