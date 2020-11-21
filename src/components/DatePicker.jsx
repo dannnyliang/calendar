@@ -4,6 +4,7 @@ import { isNil } from "ramda";
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 
+import { BREAKPOINTS } from "../styles/breakpoints";
 import { BLUE, DEFAULT, GRAY } from "../styles/color";
 import { m, s } from "../styles/space";
 import Calendar from "./Calendar";
@@ -67,6 +68,13 @@ const StyledCalendar = styled(Calendar)`
   box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 3px -2px,
     rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
   z-index: 1;
+
+  @media (max-width: ${BREAKPOINTS.S}) {
+    max-width: initial;
+    width: 100%;
+    left: 0;
+    font-size: 20px;
+  }
 `;
 
 const DateLabel = styled.span`

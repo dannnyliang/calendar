@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import Calendar from "./components/Calendar";
 import DatePicker from "./components/DatePicker";
+import { BREAKPOINTS } from "./styles/breakpoints";
 
 const propTypes = {
   className: PropTypes.string,
@@ -33,6 +34,13 @@ const StyledApp = styled(App)`
 
   ${Calendar}, ${DatePicker} {
     margin: 0 auto;
+  }
+  ${Calendar} {
+    @media (max-width: ${BREAKPOINTS.S}) {
+      max-width: initial;
+      width: 100%;
+      font-size: 20px;
+    }
   }
 `;
 
