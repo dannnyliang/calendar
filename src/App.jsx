@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import styled from "styled-components";
@@ -16,14 +15,12 @@ function App(props) {
 
   return (
     <div className={props.className}>
-      Hello React
       <h1>DatePicker</h1>
       <DatePicker />
-      <br />
+
+      <hr />
+
       <h1>Calendar</h1>
-      <div className="selected-date">
-        Selected Date: {date && format(date, "yyyy-MM-dd")}
-      </div>
       <Calendar date={date} onSelect={handleSelect} />
     </div>
   );
