@@ -6,9 +6,17 @@ import Calendar from "../components/Calendar";
 export default {
   title: "app/Calendar",
   component: Calendar,
+  argTypes: {
+    date: { control: "date" },
+  },
 };
 
-export const Default = (args) => <Calendar {...args} />;
-Default.args = {
+const Template = (args) => <Calendar {...args} />;
+
+export const Default = Template.bind({});
+Default.args = {};
+
+export const GivenDate = Template.bind({});
+GivenDate.args = {
   date: subDays(new Date(), 7),
 };

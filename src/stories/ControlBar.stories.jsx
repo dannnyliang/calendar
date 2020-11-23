@@ -6,6 +6,14 @@ import { VIEW } from "../constant";
 export default {
   title: "components/ControlBar",
   component: ControlBar,
+  argTypes: {
+    currentView: {
+      control: {
+        type: "inline-radio",
+        options: Object.values(VIEW),
+      },
+    },
+  },
 };
 
 const Template = (args) => <ControlBar {...args} />;

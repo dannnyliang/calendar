@@ -6,6 +6,10 @@ import DateView from "../components/DateView";
 export default {
   title: "components/DateView",
   component: DateView,
+  argTypes: {
+    displayDate: { control: "date" },
+    selectedDate: { control: "date" },
+  },
 };
 
 export const Default = (args) => <DateView {...args} />;

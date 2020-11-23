@@ -5,6 +5,9 @@ import Cell from "../components/Cell";
 export default {
   title: "components/Cell",
   component: Cell,
+  argTypes: {
+    children: { control: "text" },
+  },
 };
 
 const Template = (args) => (
