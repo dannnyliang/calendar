@@ -55,7 +55,7 @@ const getNewDisplayDate = ({ view, direction, displayDate }) => {
 
 const propTypes = {
   className: PropTypes.string,
-  currentView: PropTypes.string,
+  currentView: PropTypes.string.isRequired,
   displayDate: PropTypes.object.isRequired,
   onChangeView: PropTypes.func,
   onChangeDisplay: PropTypes.func,

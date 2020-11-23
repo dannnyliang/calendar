@@ -8,6 +8,16 @@ installed dependencies via yarn:
 yarn
 ```
 
+## Storybook
+
+show Calendar, DatePicker and all components in storybook
+
+```
+yarn storybook
+```
+
+storybook will show on http://localhost:6006
+
 ## Development mode
 
 ```
