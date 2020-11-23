@@ -83,35 +83,35 @@ function ControlBar(props) {
   const handleClickPrev = () => handleClickDirection("prev");
 
   return (
-    <div className={className}>
-      <div className="prev" onClick={handleClickPrev}>
-        &lt;
-      </div>
-      <div className="label" onClick={handleClickLabel}>
+    <Wrapper className={className}>
+      <PrevButton onClick={handleClickPrev}>&lt;</PrevButton>
+      <Label onClick={handleClickLabel}>
         {getLabelContent(currentView, displayDate)}
-      </div>
-      <div className="next" onClick={handleClickNext}>
-        &gt;
-      </div>
-    </div>
+      </Label>
+      <NextButton onClick={handleClickNext}>&gt;</NextButton>
+    </Wrapper>
   );
 }
 
 ControlBar.propTypes = propTypes;
 
+const PrevButton = styled.div``;
+const NextButton = styled.div``;
+const Label = styled.div``;
+
 const gridStyle = css`
-  .prev {
+  ${PrevButton} {
     grid-column: 1 / 2;
   }
-  .label {
+  ${Label} {
     grid-column: span 5;
   }
-  .next {
+  ${NextButton} {
     grid-column: -2 / -1;
   }
 `;
 
-const StyledControlBar = styled(ControlBar)`
+const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
@@ -122,13 +122,13 @@ const StyledControlBar = styled(ControlBar)`
     cursor: pointer;
   }
 
-  .prev,
-  .next {
+  ${PrevButton},
+  ${NextButton} {
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .label {
+  ${Label} {
     padding: ${m} 0;
     border-radius: ${m};
 
@@ -140,6 +140,4 @@ const StyledControlBar = styled(ControlBar)`
   ${gridStyle}
 `;
 
-StyledControlBar.propTypes = propTypes;
-
-export default StyledControlBar;
+export default ControlBar;

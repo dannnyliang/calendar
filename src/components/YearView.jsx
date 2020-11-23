@@ -38,7 +38,7 @@ function YearView(props) {
   };
 
   return (
-    <div className={className}>
+    <Wrapper className={className}>
       {getYearList(displayDate).map((year) => (
         <div key={format(year, "yyyy")} onClick={() => handleClick(year)}>
           <Cell
@@ -50,17 +50,15 @@ function YearView(props) {
           </Cell>
         </div>
       ))}
-    </div>
+    </Wrapper>
   );
 }
 
 YearView.propTypes = propTypes;
 
-const StyledYearView = styled(YearView)`
+const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(${YEARVIEW_COLUMN}, 1fr);
 `;
 
-StyledYearView.propTypes = propTypes;
-
-export default StyledYearView;
+export default YearView;

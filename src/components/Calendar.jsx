@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import { VIEW } from "../constant";
+import { BREAKPOINTS } from "../styles/breakpoints";
 import { WHITE } from "../styles/color";
 import ControlBar from "./ControlBar";
 import DateView from "./DateView";
@@ -69,7 +70,7 @@ function Calendar(props) {
   };
 
   return (
-    <div className={className}>
+    <Wrapper className={className}>
       <ControlBar
         currentView={currentView}
         displayDate={displayDate}
@@ -97,20 +98,21 @@ function Calendar(props) {
           onChangeView={handleChangeView}
         />
       )}
-    </div>
+    </Wrapper>
   );
 }
 
 Calendar.propTypes = propTypes;
 Calendar.defaultProps = defaultProps;
 
-const StyledCalendar = styled(Calendar)`
-  max-width: 400px;
+const Wrapper = styled.div`
+  width: 500px;
   background-color: ${WHITE};
-  position: relative;
+
+  @media (max-width: ${BREAKPOINTS.S}) {
+    width: 100%;
+    font-size: 20px;
+  }
 `;
 
-StyledCalendar.propTypes = propTypes;
-StyledCalendar.defaultProps = defaultProps;
-
-export default StyledCalendar;
+export default Calendar;

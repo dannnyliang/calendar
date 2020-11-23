@@ -24,7 +24,7 @@ function MonthView(props) {
   };
 
   return (
-    <div className={className}>
+    <Wrapper className={className}>
       {getMonthList(displayDate).map((month) => (
         <div key={format(month, "MMM")} onClick={() => handleClick(month)}>
           <Cell
@@ -35,17 +35,15 @@ function MonthView(props) {
           </Cell>
         </div>
       ))}
-    </div>
+    </Wrapper>
   );
 }
 
 MonthView.propTypes = propTypes;
 
-const StyledMonthView = styled(MonthView)`
+const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(${MONTHVIEW_COLUMN}, 1fr);
 `;
 
-StyledMonthView.propTypes = propTypes;
-
-export default StyledMonthView;
+export default MonthView;

@@ -21,17 +21,35 @@ const defaultProps = {
 };
 
 function Cell(props) {
+  const {
+    className,
+    children,
+    clickable,
+    isActive,
+    isCurrent,
+    disabled,
+  } = props;
+
   return (
-    <div className={props.className}>
-      <div className="cell-wrapper">
-        <div className="cell-content">{props.children}</div>
-      </div>
-    </div>
+    <Wrapper
+      className={className}
+      clickable={clickable}
+      isActive={isActive}
+      isCurrent={isCurrent}
+      disabled={disabled}
+    >
+      <CellSlot>
+        <CellContent>{children}</CellContent>
+      </CellSlot>
+    </Wrapper>
   );
 }
 
 Cell.propTypes = propTypes;
 Cell.defaultProps = defaultProps;
+
+const CellSlot = styled.div``;
+const CellContent = styled.div``;
 
 const currentStyle = css`
   color: ${PRIMARY};
@@ -55,7 +73,7 @@ const clickableStyle = css`
 `;
 
 const squareStyle = css`
-  .cell-wrapper {
+  ${CellSlot} {
     width: 100%;
     position: relative;
     &::before {
@@ -64,7 +82,7 @@ const squareStyle = css`
       padding-top: 100%;
     }
 
-    .cell-content {
+    ${CellContent} {
       position: absolute;
       width: 100%;
       height: 100%;
@@ -73,8 +91,8 @@ const squareStyle = css`
   }
 `;
 
-const StyledCell = styled(Cell)`
-  .cell-wrapper > .cell-content {
+const Wrapper = styled.div`
+  ${CellSlot} > ${CellContent} {
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -87,7 +105,4 @@ const StyledCell = styled(Cell)`
   ${squareStyle}
 `;
 
-StyledCell.propTypes = propTypes;
-StyledCell.defaultProps = defaultProps;
-
-export default StyledCell;
+export default Cell;

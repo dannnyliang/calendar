@@ -26,20 +26,20 @@ function DatePicker(props) {
   };
 
   return (
-    <div className={className}>
-      <Wrapper isFocus={isFocus} onClick={handleOpenCalendar}>
+    <Wrapper className={className}>
+      <DateInput isFocus={isFocus} onClick={handleOpenCalendar}>
         <i className="material-icons">calendar_today</i>
         <DateLabel isEmpty={isNil(date)}>
           {date ? format(date, "yyyy-MM-dd") : "____-__-__"}
         </DateLabel>
-      </Wrapper>
+      </DateInput>
       {isFocus && (
         <>
           <Overlay onClick={handleCloseCalendar} />
           <StyledCalendar date={date} onSelect={handleSelect} />
         </>
       )}
-    </div>
+    </Wrapper>
   );
 }
 
@@ -70,10 +70,8 @@ const StyledCalendar = styled(Calendar)`
   z-index: 1;
 
   @media (max-width: ${BREAKPOINTS.S}) {
-    max-width: initial;
     width: 100%;
     left: 0;
-    font-size: 20px;
   }
 `;
 
@@ -81,7 +79,7 @@ const DateLabel = styled.span`
   color: ${(props) => (props.isEmpty ? GRAY : DEFAULT)};
 `;
 
-const Wrapper = styled.div`
+const DateInput = styled.div`
   border: 2px solid ${GRAY};
   border-radius: ${s};
   padding: ${s} ${m};
@@ -96,11 +94,11 @@ const Wrapper = styled.div`
   ${(props) => props.isFocus && focusStyle}
 `;
 
-const StyledDatePicker = styled(DatePicker)`
+const Wrapper = styled.div`
   display: inline-block;
   i {
     margin-right: ${s};
   }
 `;
 
-export default StyledDatePicker;
+export default DatePicker;

@@ -14,10 +14,6 @@ import styled from "styled-components";
 import { getDateList, weekList } from "../helpers";
 import Cell from "./Cell";
 
-const HeaderCell = styled(Cell)`
-  font-weight: bold;
-`;
-
 function WeekHeader() {
   return weekList
     .map((week) => format(week, "EEEEEE"))
@@ -42,14 +38,13 @@ function DateView(props) {
     isBefore(date, startOfMonth(displayDate)) ||
     isAfter(date, endOfMonth(displayDate));
 
+  const handleClick = (date) => onSelectDate?.(date);
+
   return (
-    <div className={className}>
+    <Wrapper className={className}>
       <WeekHeader />
       {getDateList(displayDate).map((date) => (
-        <div
-          key={format(date, "yyyy-MM-dd")}
-          onClick={() => onSelectDate?.(date)}
-        >
+        <div key={format(date, "yyyy-MM-dd")} onClick={() => handleClick(date)}>
           <Cell
             isCurrent={isToday(date)}
             isActive={isSameDay(selectedDate, date)}
@@ -59,17 +54,19 @@ function DateView(props) {
           </Cell>
         </div>
       ))}
-    </div>
+    </Wrapper>
   );
 }
 
 DateView.propTypes = propTypes;
 
-const StyledDateView = styled(DateView)`
+const HeaderCell = styled(Cell)`
+  font-weight: bold;
+`;
+
+const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 `;
 
-StyledDateView.propTypes = propTypes;
-
-export default StyledDateView;
+export default DateView;
