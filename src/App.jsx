@@ -16,11 +16,14 @@ function App() {
       <hr />
 
       <h1>Calendar</h1>
-      <Calendar date={date} onSelect={handleSelect} />
+      <StyledCalendar date={date} onSelect={handleSelect} />
     </Wrapper>
   );
 }
 
+const StyledCalendar = styled(Calendar)`
+  margin: 0 auto;
+`;
 const Wrapper = styled.div`
   text-align: center;
 `;
