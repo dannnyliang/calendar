@@ -11,32 +11,45 @@ import Calendar from "./Calendar";
 
 const propTypes = {
   className: PropTypes.string,
+  date: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  onSelect: PropTypes.func,
 };
 
 function DatePicker(props) {
-  const { className } = props;
+  const { className, date, onSelect } = props;
+
   const [isFocus, setIsFocus] = useState(false);
-  const [date, setDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const isControlled = typeof date !== "undefined";
+  const controlledDate = new Date(date);
+  const selected = isControlled ? controlledDate : selectedDate;
 
   const handleOpenCalendar = () => setIsFocus(true);
   const handleCloseCalendar = () => setIsFocus(false);
-  const handleSelect = (date) => {
-    setDate(date);
+  const handleUncontrolledSelect = (date) => {
+    setSelectedDate(date);
     handleCloseCalendar();
   };
+  const handleSelect = isControlled
+    ? (date) => {
+        handleCloseCalendar();
+        onSelect?.(date);
+      }
+    : (date) => handleUncontrolledSelect(date);
 
   return (
     <Wrapper className={className}>
       <DateInput isFocus={isFocus} onClick={handleOpenCalendar}>
         <i className="material-icons">calendar_today</i>
-        <DateLabel isEmpty={isNil(date)}>
-          {date ? format(date, "yyyy-MM-dd") : "____-__-__"}
+        <DateLabel isEmpty={isNil(selected)}>
+          {selected ? format(selected, "yyyy-MM-dd") : "____-__-__"}
         </DateLabel>
       </DateInput>
       {isFocus && (
         <>
           <Overlay onClick={handleCloseCalendar} />
-          <StyledCalendar date={date} onSelect={handleSelect} />
+          <StyledCalendar date={selected} onSelect={handleSelect} />
         </>
       )}
     </Wrapper>
